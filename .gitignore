@@ -1,0 +1,10 @@
+.DS_Store
+./resources/*/*.tiff
+./resources/*/*.png
+./resources/*/*.jpeg
+./resources/*/*.jpg
+./output/*.tiff
+./output/*.png
+./output/*.jpeg
+./output/*.jpg
+.idea/*
