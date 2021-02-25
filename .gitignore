@@ -1,4 +1,8 @@
 .DS_Store
+*.tiff
+*.png
+*.jpeg
+*.jpg
 ./resources/*/*.tiff
 ./resources/*/*.png
 ./resources/*/*.jpeg
