@@ -1,6 +1,5 @@
-# solution from https://stackoverflow.com/questions/40895785/using-opencv-to-overlay-transparent-image-onto-another-image
+# Layer merging solution from https://stackoverflow.com/questions/40895785/using-opencv-to-overlay-transparent-image-onto-another-image
 import cv2
-import numpy as np
 
 import images as Images
 
