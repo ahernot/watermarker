@@ -1,13 +1,12 @@
-import coordinator as Coordinator
+import coordinator_wrapper as CoordinatorW
 
 
 # Add batch processing
 
 if __name__ == '__main__':
-    Coordinator.add_watermark(
-        image_path='./resources/images/IMG_5613.JPG',
+
+    CoordinatorW.add_watermark_batch(
         watermark_path='./resources/watermarks/copyright-whitetransp.tiff',
-        output_path='./output/output.png',
         watermark_size=(None, 0.1),
         watermark_position=(50, 1.0),
         image_size=1500,
