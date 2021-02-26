@@ -1,4 +1,4 @@
-# watermarker
+# watermarker v0.2
 
 A Python OpenCV image watermarking utility
 
