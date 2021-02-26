@@ -25,7 +25,7 @@ def add_watermark(
     :param watermark_size: Tuple of percentages/pixels: (width-percentage, height-percentage), leave one as None for proportions // , or pixel value (for largest axis)
     :param watermark_position: Tuple of percentages/pixels: (width-percentage, height-percentage) from top left
     :param image_size: Tuple of percentages/pixels, or pixel value (for largest axis)
-    :param kwargs:
+    :param kwargs: 'opacity': 0. < float < 1.
     :return:
     """
 
