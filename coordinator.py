@@ -59,13 +59,3 @@ def add_watermark(
 
     # Save image
     cv2.imwrite('out.png', image_resized)
-
-
-add_watermark(
-    image_path='./resources/images/IMG_5613.JPG',
-    watermark_path='./resources/watermarks/copyright-whitetransp.tiff',
-    watermark_size=(None, 0.1),
-    watermark_position=(50, 1.0),
-    image_size=1500,
-    opacity=0.35
-)
