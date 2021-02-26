@@ -12,3 +12,4 @@
 ./output/*.jpeg
 ./output/*.jpg
 .idea/*
+__pycache__
