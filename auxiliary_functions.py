@@ -1,5 +1,14 @@
+import os
 import cv2
 import numpy as np
+
+
+def get_files(directory_path):
+    file_list = []
+    for (dirpath, dirnames, filenames) in os.walk(directory_path):
+        file_list.extend(filenames)
+        break
+    return file_list
 
 
 def imread_rgba(path):
