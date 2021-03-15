@@ -9,16 +9,21 @@ import auxiliary_functions as AuxFunc
 # check interpolation method for resizing
 # add image_crop Vector4 (left right top bottom) in kwargs
 # padding should also crop on sides when watermark too big for image
+# save image in RGBA
 def add_watermark(
         image_path: str,
         watermark_path: str,
         output_path: str,
-        watermark_size: tuple or int or float = (None, None),
-        watermark_position: tuple = (1.0, 1.0),
-        image_size: tuple or int or float = (1.0, 1.0),
+        watermark_size: tuple or int or float = (None, None),  # can only be positive
+        watermark_position: tuple = (1.0, 1.0),  # can be positive or negative
+        image_size: tuple or int or float = (1.0, 1.0),  # can only be positive
         **kwargs):
     """
-    Add watermark to image. Remove EXIF tags.
+    Add watermark to image. Remove EXIF tags (because only image is taken).
+
+    watermark size is relative to cropped image
+    resizing happens once watermark has been applied
+
     :param image_path:
     :param watermark_path:
     :param output_path: Output save path
@@ -33,13 +38,19 @@ def add_watermark(
     mask_opacity = 0.35
     if 'opacity' in kwargs:
         mask_opacity = kwargs['opacity']
+    # image crop in *kwargs is also either negative or positive
+    """ image_crop = (0, 550, 10, 25) Vector4 (w0, w1, h0, h1) """
 
     # Load image and watermark
     image, i_height, i_width, i_depth = AuxFunc.imread_rgba(image_path)
     watermark, w_height, w_width, w_depth = AuxFunc.imread_rgba(watermark_path)
 
+    # add requested crop to image
+    ### pass ###
+
     # Calculate new sizes
     i_width, i_height = AuxFunc.set_image_size(i_width, i_height, image_size)
+    # w_width_max, w_height_max = AuxFunc.calc_max_size(i_width, i_height, w_width, w_height)
     w_width, w_height = AuxFunc.set_watermark_size(i_width, i_height, w_width, w_height, watermark_size)
 
     # Resize
@@ -60,3 +71,8 @@ def add_watermark(
 
     # Save image
     cv2.imwrite(output_path, image_resized)
+
+
+# image_crop = (0, 0, 0, 0)
+# crop will either be percentages or number of pixels
+
