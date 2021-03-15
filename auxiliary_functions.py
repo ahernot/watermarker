@@ -26,11 +26,11 @@ def imread_rgba(path):
 def calc_max_size(i1_width, i1_height, i2_width, i2_height):
     """
     Calculate maximum size for image 2 inside of image 1 with no overflow and no stretching.
-    :param i1_width:
-    :param i1_height:
-    :param i2_width:
-    :param i2_height:
-    :return:
+    :param i1_width: bounding image width
+    :param i1_height: bounding image height
+    :param i2_width: image width
+    :param i2_height: image height
+    :return: maximum i2 dimensions
     """
 
     # Calculate ratios
@@ -53,17 +53,7 @@ def calc_max_size(i1_width, i1_height, i2_width, i2_height):
 # TODO
 # abs(width) for percentage checks
 # and width-val for negative values; -1 should remove 1 pixel only
-def set_watermark_size(i_shape, w_shape, w_resize):
-    """
-    Set watemrark size
-
-    reference_size = i_shape, for both watermark and image (used to resize, max_size)
-
-    :param i_shape:
-    :param w_shape:
-    :param w_resize:
-    :return:
-    """
+"""def set_watermark_size(i_shape, w_shape, w_resize):
 
     # Unpack shapes
     i_width, i_height = i_shape
@@ -94,7 +84,6 @@ def set_watermark_size(i_shape, w_shape, w_resize):
         height = height * i_height  # read as percentage of image height
 
     # Calculate maximum watermark size, using reference_size
-    # TODO: remove from here
     if w_ratio >= i_ratio:
         max_width = i_width
         max_height = w_width / w_ratio
@@ -115,12 +104,9 @@ def set_watermark_size(i_shape, w_shape, w_resize):
         height = width / w_ratio
 
     return int(width), int(height)
+"""
 
-
-
-
-
-def set_image_size(i_width, i_height, image_size):
+"""def set_image_size(i_width, i_height, image_size):
 
     # Set the largest dimension
     if type(image_size) in (int, float):
@@ -145,20 +131,13 @@ def set_image_size(i_width, i_height, image_size):
     if (height is not None) and (height <= 1):
         height = height * i_height  # read as percentage
 
-    """# Apply max dimensions
-    max_width, max_height = max_size
-    if width is not None:
-        width = min(width, max_width)
-    if height is not None:
-        height = min(height, max_height)"""
-
     # Remove None to preserve aspect ratio
     if width is None:
         width = i_ratio * height
     elif height is None:
         height = width / i_ratio
 
-    return int(width), int(height)
+    return int(width), int(height)"""
 
 
 
@@ -198,7 +177,7 @@ def set_size(width, height, target_size, reference_size):
         height *= r_height
 
     # Calculate max dimensions
-    max_width, max_height = width, height  # TODO: replace with function call
+    max_width, max_height = calc_max_size(r_width, r_height, width, height)
 
     # Apply max dimensions
     if width is not None:
@@ -213,12 +192,6 @@ def set_size(width, height, target_size, reference_size):
         height = width / aspect_ratio
 
     return int(width), int(height)
-
-
-
-
-
-
 
 
 
