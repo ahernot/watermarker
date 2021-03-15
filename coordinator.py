@@ -6,7 +6,6 @@ import auxiliary_functions as AuxFunc
 
 
 # TODO
-# check interpolation method for resizing
 # add image_crop Vector4 (left right top bottom) in kwargs
 # padding should also crop on sides when watermark too big for image
 # save image in RGBA
@@ -38,8 +37,8 @@ def add_watermark(
     mask_opacity = 0.35
     if 'opacity' in kwargs:
         mask_opacity = kwargs['opacity']
+
     # image crop in *kwargs is also either negative or positive
-    """ image_crop = (0, 550, 10, 25) Vector4 (w0, w1, h0, h1) """
 
     # Load image and watermark
     image, i_height, i_width, i_depth = AuxFunc.imread_rgba(image_path)
@@ -75,4 +74,4 @@ def add_watermark(
 
 # image_crop = (0, 0, 0, 0)
 # crop will either be percentages or number of pixels
-
+""" image_crop = (0, 550, 10, 25) Vector4 (w0, w1, h0, h1) """
