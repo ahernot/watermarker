@@ -47,11 +47,11 @@ def add_watermark(
 
     # add requested crop to image
     ### pass ###
+    # but isn't this stored in the image_size tuple?
 
     # Calculate new sizes
-    i_width, i_height = AuxFunc.set_image_size(i_width, i_height, image_size)
-    # w_width_max, w_height_max = AuxFunc.calc_max_size(i_width, i_height, w_width, w_height)
-    w_width, w_height = AuxFunc.set_watermark_size(i_width, i_height, w_width, w_height, watermark_size)
+    i_width, i_height = AuxFunc.set_size(i_width, i_height, image_size)  # AuxFunc.set_image_size(i_width, i_height, image_size)
+    w_width, w_height = AuxFunc.set_size(w_width, w_height, watermark_size, (i_width, i_height))  # AuxFunc.set_watermark_size(i_width, i_height, w_width, w_height, watermark_size)
 
     # Resize
     image_resized = cv2.resize(image, (i_width, i_height), interpolation=cv2.INTER_AREA)
