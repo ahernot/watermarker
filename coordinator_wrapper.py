@@ -22,9 +22,11 @@ def add_watermark_batch(
     # Get list of images
     file_list = AuxFunc.get_files(IMAGE_DIRPATH)
 
+    # Generate output dir
     output_dir = OUTPUT_DIRPATH + dt.datetime.now().strftime('%Y%m%d-%H%M%S-batch/')
     os.makedirs(output_dir)
 
+    # Run through files
     for filename in file_list:
 
         # Skip non-image files
