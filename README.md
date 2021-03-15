@@ -13,3 +13,5 @@ Initialise:
 
 ## To do
 * Add support for negative position indices to signify from left
+* Take rotation into account (from EXIF)
+* Watermark size percentage should be a PERCENTAGE OF THE FINAL SIZE
