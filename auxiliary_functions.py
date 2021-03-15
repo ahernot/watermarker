@@ -142,7 +142,7 @@ def calc_max_size(i1_width, i1_height, i2_width, i2_height):
 
 
 
-def set_size(width, height, target_size, reference_size):
+def set_size(width: int, height: int, target_size: tuple or int or None, reference_size: tuple or None = None) -> (int, int):
     """
     Set image/watermark size based on bounding container and resizing requirement.
     :param width: Original width
@@ -156,7 +156,10 @@ def set_size(width, height, target_size, reference_size):
     aspect_ratio = width / height
 
     # Unpack reference size
-    r_width, r_height = reference_size
+    if reference_size in (None, (None, None)):
+        r_width, r_height = width, height
+    else:
+        r_width, r_height = reference_size
 
     # Unpack target_size
     if target_size in (None, (None, None)):  # preserve dimensions
