@@ -39,7 +39,7 @@ def add_watermark_batch(
         output_path = output_dir + filename_name + '-watermarked.' + extension
 
         # Process image
-        Coordinator.add_watermark(
+        status = Coordinator.add_watermark(
             image_path=image_path,
             watermark_path=watermark_path,
             output_path=output_path,

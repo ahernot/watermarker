@@ -153,48 +153,47 @@ def set_size(width: int, height: int, target_size: tuple or int or None, referen
     """
 
     # Calculate aspect ratio
-    aspect_ratio = width / height
+    current_ratio = width / height
 
     # Unpack reference size
-    if reference_size in (None, (None, None)):
+    if reference_size in (None, (None, None)):  # set to current size
         r_width, r_height = width, height
     else:
         r_width, r_height = reference_size
 
-    # Unpack target_size
+    # Unpack target_size (resize instructions)
     if target_size in (None, (None, None)):  # preserve dimensions
         t_width, t_height = 1.0, 1.0
-
     elif type(target_size) in (int, float):  # set the largest dimension (if only one size value given)
-        if aspect_ratio >= 1:
+        if current_ratio >= 1:
             t_width, t_height = target_size, None
         else:
             t_width, t_height = None, target_size
-    else:  # regular unpacking
+    else:  # regular unpack
         t_width, t_height = target_size
 
     # Read target_size as percentages (if values <= 1)
     if (t_width is not None) and (t_width <= 1):
-        width *= r_width
+        t_width *= r_width
     if (t_height is not None) and (t_height <= 1):
-        height *= r_height
+        t_height *= r_height
 
     # Calculate max dimensions
     max_width, max_height = calc_max_size(r_width, r_height, width, height)
 
     # Apply max dimensions
-    if width is not None:
-        width = min(width, max_width)
-    if height is not None:
-        height = min(height, max_height)
+    if t_width is not None:
+        t_width = min(t_width, max_width)
+    elif t_height is not None:
+        t_height = min(t_height, max_height)
 
     # Fill None with aspect ration constraint
-    if width is None:
-        width = aspect_ratio * height
-    elif height is None:
-        height = width / aspect_ratio
+    if t_width is None:
+        t_width = current_ratio * t_height
+    elif t_height is None:
+        t_height = t_width / current_ratio
 
-    return int(width), int(height)
+    return round(t_width), round(t_height)
 
 
 

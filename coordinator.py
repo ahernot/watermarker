@@ -6,9 +6,10 @@ import auxiliary_functions as AuxFunc
 
 
 # TODO
-# add image_crop Vector4 (left right top bottom) in kwargs
 # padding should also crop on sides when watermark too big for image
-# save image in RGBA
+# allow negative watermark_position
+# careful about rounding in set_size (): issues? no, there shouldn't be any
+# allow crop to be percentages? use? IDTS…
 def add_watermark(
         image_path: str,
         watermark_path: str,
@@ -16,7 +17,7 @@ def add_watermark(
         watermark_size: tuple or int or float = (None, None),  # can only be positive
         watermark_position: tuple = (1.0, 1.0),  # can be positive or negative
         image_size: tuple or int or float = (1.0, 1.0),  # can only be positive
-        **kwargs):
+        **kwargs) -> bool:
     """
     Add watermark to image. Remove EXIF tags (because only image is taken).
 
@@ -29,7 +30,7 @@ def add_watermark(
     :param watermark_size: Tuple of percentages/pixels: (width-percentage, height-percentage), leave one as None for proportions // , or pixel value (for largest axis)
     :param watermark_position: Tuple of percentages/pixels: (width-percentage, height-percentage) from top left
     :param image_size: Tuple of percentages/pixels, or pixel value (for largest axis)
-    :param kwargs: 'opacity': 0. < float < 1.
+    :param kwargs: 'opacity': 0. < float < 1 | 'crop': image crop, in pixels (left, right-1, top, bottom-1) - Vector4(int), applied before any resizing // can be negative for ends of bounds
     :return:
     """
 
@@ -39,14 +40,16 @@ def add_watermark(
         mask_opacity = kwargs['opacity']
 
     # image crop in *kwargs is also either negative or positive
+    image_crop = (None, None, None, None)
+    if 'crop' in kwargs:
+        image_crop = kwargs['crop']
 
     # Load image and watermark
     image, i_height, i_width, i_depth = AuxFunc.imread_rgba(image_path)
     watermark, w_height, w_width, w_depth = AuxFunc.imread_rgba(watermark_path)
 
-    # add requested crop to image
-    ### pass ###
-    # but isn't this stored in the image_size tuple?
+    # Crop image
+    image = image[image_crop[0]:image_crop[1], image_crop[2]:image_crop[3]]
 
     # Calculate new sizes
     i_width, i_height = AuxFunc.set_size(i_width, i_height, image_size)  # AuxFunc.set_image_size(i_width, i_height, image_size)
@@ -68,10 +71,8 @@ def add_watermark(
 
     image_resized = ((1.0 - w_mask) * image_resized)[:, :, :3] + w_mask * w_img
 
-    # Save image
+    # Save image (RGB, no alpha channel)
     cv2.imwrite(output_path, image_resized)
 
+    return True  # success
 
-# image_crop = (0, 0, 0, 0)
-# crop will either be percentages or number of pixels
-""" image_crop = (0, 550, 10, 25) Vector4 (w0, w1, h0, h1) """
