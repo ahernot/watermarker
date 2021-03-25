@@ -39,25 +39,27 @@ def add_watermark(
     if 'opacity' in kwargs:
         mask_opacity = kwargs['opacity']
 
-    # image crop in *kwargs is also either negative or positive
     image_crop = (None, None, None, None)
-    if 'crop' in kwargs:
+    if 'crop' in kwargs:  # image crop in *kwargs is also either negative or positive
         image_crop = kwargs['crop']
 
     # Load image and watermark
     image, i_height, i_width, i_depth = AuxFunc.imread_rgba(image_path)
     watermark, w_height, w_width, w_depth = AuxFunc.imread_rgba(watermark_path)
 
-    # Crop image
+    # Crop image on original size (change aspect ratio)
     image = image[image_crop[0]:image_crop[1], image_crop[2]:image_crop[3]]
 
-    # Calculate new sizes
-    i_width, i_height = AuxFunc.set_size(i_width, i_height, image_size)  # AuxFunc.set_image_size(i_width, i_height, image_size)
-    w_width, w_height = AuxFunc.set_size(w_width, w_height, watermark_size, (i_width, i_height))  # AuxFunc.set_watermark_size(i_width, i_height, w_width, w_height, watermark_size)
-
-    # Resize
+    # Calculate & apply new sizes (keep aspect ratio)
+    i_width, i_height = AuxFunc.set_size(i_width, i_height, image_size)
+    w_width, w_height = AuxFunc.set_size(w_width, w_height, watermark_size, (i_width, i_height))
     image_resized = cv2.resize(image, (i_width, i_height), interpolation=cv2.INTER_AREA)
     watermark_resized = cv2.resize(watermark, (w_width, w_height), interpolation=cv2.INTER_AREA)
+
+    # Calculate watermark position as (start:stop, start:stop) of resized image
+
+    # cv2.imwrite(output_path+'overlay.png', image[:w_height, :w_width])
+    # stick to leading edge
 
     # Pad watermark
     watermark_layer = AuxFunc.pad(watermark_resized, i_width, i_height, w_width, w_height, watermark_position)
