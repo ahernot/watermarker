@@ -142,11 +142,11 @@ def calc_position(i1_width, i1_height, i2_width, i2_height, i2_position):
     i2_width_half = i2_width / 2
     i2_height_half = i2_height / 2
 
-    i2_bounding_box = [0] * 4  # left right up down
-    i2_bounding_box[0] = round(width_r * pos_x_percent - i2_width_half)
-    i2_bounding_box[1] = i2_bounding_box[0] + i2_width
-    i2_bounding_box[2] = round(height_r * pos_y_percent - i2_height_half)
-    i2_bounding_box[3] = i2_bounding_box[2] + i2_height
+    i2_bounding_box = [0] * 4  # up down left right
+    i2_bounding_box[2] = round(width_r * pos_x_percent - i2_width_half)
+    i2_bounding_box[3] = i2_bounding_box[2] + i2_width
+    i2_bounding_box[0] = round(height_r * pos_y_percent - i2_height_half)
+    i2_bounding_box[1] = i2_bounding_box[0] + i2_height
 
     #padding[0] = int(width_r * pos_x_percent)  # left
     #padding[1] = width_r - padding[0]  # right
