@@ -1,9 +1,9 @@
-# watermarker v0.2
+# watermarker v2.0
 
 A Python OpenCV image watermarking utility
 
 
-## Getting started
+## Getting started (legacy)
 
 Initialise:
 * add watermark image files in ./resources/watermarks/
@@ -11,7 +11,7 @@ Initialise:
 
 <br><br>
 
-## To do
+## To do (legacy)
 * Add support for negative position indices to signify from left
 * Take rotation into account (from EXIF)
 * Watermark size percentage should be a PERCENTAGE OF THE FINAL SIZE
